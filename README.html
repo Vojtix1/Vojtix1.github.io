@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HydroForce — Professional Pressure Washing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #06050e;
+      --bg2:      #0b0918;
+      --surface:  #110f22;
+      --surface2: #181530;
+      --indigo:   #2d1fff;
+      --violet:   #6c1fff;
+      --neon:     #7c3aff;
+      --electric: #4f6fff;
+      --aqua:     #38c4ff;
+      --white:    #eeeaff;
+      --offwhite: #c8c2e8;
+      --muted:    #6057a0;
+      --border:   rgba(108, 31, 255, 0.2);
+      --border2:  rgba(108, 31, 255, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ══ NOISE LAYER ══════════════════════ */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.55;
+    }
+
+    /* ══ SCROLLBAR ════════════════════════ */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 4px; }
+
+    /* ══ NAV ══════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 60px;
+      height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(6,5,14,0.97), rgba(6,5,14,0));
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border2);
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(108,31,255,0.5);
+      flex-shrink: 0;
+    }
+    .nav-brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .nav-brand-name span {
+      color: var(--aqua);
+    }
+
+    .nav-links {
+      display: flex; gap: 4px; align-items: center;
+    }
+    .nav-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.25s, background 0.25s;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--white);
+      background: rgba(108,31,255,0.18);
+      border-color: var(--border);
+    }
+
+    .nav-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(108,31,255,0.4);
+      transition: box-shadow 0.3s, transform 0.2s;
+      margin-left: 12px;
+      text-decoration: none;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 36px rgba(108,31,255,0.7);
+      transform: translateY(-1px);
+    }
+
+    /* ══ HERO PAGE ════════════════════════ */
+    #home {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 60px 80px;
+      overflow: hidden;
+    }
+
+    /* Water stream SVG lines */
+    .stream-bg {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.18;
+    }
+
+    /* Big diagonal slash */
+    .hero-slash {
+      position: absolute;
+      top: 0; right: 18%;
+      width: 3px;
+      height: 140%;
+      background: linear-gradient(to bottom, transparent, var(--neon), var(--aqua), transparent);
+      transform: rotate(-18deg) translateY(-20%);
+      filter: blur(1px);
+      pointer-events: none;
+      z-index: 2;
+      animation: pulseLine 4s ease-in-out infinite;
+    }
+    .hero-slash-2 {
+      position: absolute;
+      top: 0; right: 22%;
+      width: 1px;
+      height: 140%;
+      background: linear-gradient(to bottom, transparent, rgba(79,111,255,0.6), transparent);
+      transform: rotate(-18deg) translateY(-20%);
+      pointer-events: none;
+      z-index: 2;
+      animation: pulseLine 4s ease-in-out 1.2s infinite;
+    }
+    .hero-slash-3 {
+      position: absolute;
+      top: 0; right: 26%;
+      width: 1px;
+      height: 140%;
+      background: linear-gradient(to bottom, transparent, rgba(108,31,255,0.4), transparent);
+      transform: rotate(-18deg) translateY(-20%);
+      pointer-events: none;
+      z-index: 2;
+      animation: pulseLine 4s ease-in-out 2.4s infinite;
+    }
+    @keyframes pulseLine {
+      0%,100% { opacity: 0.4; }
+      50%      { opacity: 1; }
+    }
+
+    /* Radial glow behind text */
+    .hero-glow {
+      position: absolute;
+      top: 40%; left: 20%;
+      width: 700px; height: 700px;
+      background: radial-gradient(ellipse, rgba(61,31,255,0.18) 0%, transparent 65%);
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 780px;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--aqua);
+      background: rgba(56,196,255,0.08);
+      border: 1px solid rgba(56,196,255,0.25);
+      padding: 7px 16px;
+      border-radius: 100px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--aqua);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0.2; }
+    }
+
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(70px, 10vw, 148px);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+    .hero-title .t1 { display: block; color: var(--white); }
+    .hero-title .t2 {
+      display: block;
+      background: linear-gradient(100deg, var(--electric), var(--neon), var(--aqua));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200%;
+      animation: shimmer 6s linear infinite, fadeUp 0.9s ease 0.4s forwards;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--offwhite);
+      max-width: 500px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.9s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 40px rgba(108,31,255,0.5);
+      transition: box-shadow 0.3s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 60px rgba(108,31,255,0.8);
+      transform: translateY(-3px);
+    }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--offwhite);
+      padding: 16px 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-outline:hover {
+      background: rgba(108,31,255,0.12);
+      border-color: rgba(108,31,255,0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      border-top: 1px solid var(--border2);
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.3s forwards;
+    }
+    .stat {
+      flex: 1;
+      padding: 28px 40px;
+      border-right: 1px solid var(--border2);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--white), var(--lavender, #a78bfa));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ══ SECTION SHARED ═══════════════════ */
+    section { position: relative; overflow: hidden; }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 60px;
+    }
+
+    .section-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--aqua);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 2px;
+      background: var(--aqua);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(48px, 6vw, 88px);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    /* ══ SERVICES PAGE ════════════════════ */
+    #services {
+      background: var(--bg2);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 72px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .services-intro {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--offwhite);
+      max-width: 420px;
+    }
+
+    /* Service cards */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.2,1,0.3,1), box-shadow 0.35s;
+      cursor: default;
+      position: relative;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 70px rgba(80,40,255,0.25);
+      border-color: rgba(108,31,255,0.4);
+    }
+
+    .card-visual {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Driveway card visual */
+    .cv-driveway {
+      background: linear-gradient(135deg, #0a0820 0%, #1a1040 100%);
+    }
+    .cv-driveway .tile-grid {
+      position: absolute; inset: 0;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 2px;
+      padding: 2px;
+    }
+    .tile {
+      background: rgba(255,255,255,0.03);
+      border-radius: 2px;
+      transition: background 0.4s;
+    }
+    .tile.clean { background: rgba(79,111,255,0.25); }
+    .tile.very-clean { background: rgba(56,196,255,0.4); }
+
+    /* Window card visual */
+    .cv-window {
+      background: linear-gradient(135deg, #080620 0%, #120a38 100%);
+    }
+    .window-frame {
+      width: 140px; height: 140px;
+      border: 3px solid rgba(108,31,255,0.6);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .window-frame::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 3px;
+      background: rgba(108,31,255,0.6);
+    }
+    .window-frame::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 3px;
+      background: rgba(108,31,255,0.6);
+    }
+    .window-shine {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(56,196,255,0.15) 0%, transparent 60%);
+      animation: shine 3s ease-in-out infinite alternate;
+    }
+    @keyframes shine {
+      from { opacity: 0.4; }
+      to   { opacity: 1; }
+    }
+    .water-drop {
+      position: absolute;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(56,196,255,0.8), transparent);
+      border-radius: 2px;
+      animation: drip var(--dur, 2s) linear var(--delay, 0s) infinite;
+    }
+    @keyframes drip {
+      0%   { transform: translateY(-20px); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(160px); opacity: 0; }
+    }
+
+    /* Roof card visual */
+    .cv-roof {
+      background: linear-gradient(135deg, #060420 0%, #0e0830 100%);
+    }
+    .roof-shape {
+      position: relative;
+      width: 160px;
+    }
+    .roof-top {
+      width: 0;
+      height: 0;
+      border-left: 80px solid transparent;
+      border-right: 80px solid transparent;
+      border-bottom: 60px solid rgba(108,31,255,0.5);
+      position: relative;
+      z-index: 2;
+    }
+    .roof-body {
+      width: 160px; height: 70px;
+      background: rgba(61,31,255,0.3);
+      border: 1px solid rgba(108,31,255,0.4);
+      position: relative;
+    }
+    .roof-shingles {
+      position: absolute; inset: 0;
+      overflow: hidden;
+    }
+    .shingle-row {
+      display: flex;
+      height: 14px;
+      gap: 1px;
+    }
+    .shingle {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .shingle.clean { background: rgba(56,196,255,0.15); }
+    .jet {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(56,196,255,0.9), transparent);
+      transform: translateX(-50%);
+      border-radius: 2px;
+      animation: jetPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes jetPulse {
+      0%,100% { opacity: 0.5; height: 40px; }
+      50%      { opacity: 1;   height: 60px; }
+    }
+
+    .card-body-wrap {
+      padding: 32px 32px 36px;
+    }
+
+    .card-service-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--aqua);
+      margin-bottom: 10px;
+    }
+
+    .card-service-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .card-service-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .card-feature-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .card-feature-list li {
+      font-size: 13px;
+      color: var(--offwhite);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-feature-list li::before {
+      content: '';
+      display: inline-block;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: rgba(56,196,255,0.15);
+      border: 1px solid rgba(56,196,255,0.4);
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%2338c4ff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* Bottom accent bar per card */
+    .card-accent {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--indigo), var(--violet), var(--aqua));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.2,1,0.3,1);
+    }
+    .service-card:hover .card-accent { transform: scaleX(1); }
+
+    /* ══ CONTACT PAGE ═════════════════════ */
+    #contact {
+      background: var(--bg);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-left {}
+
+    .contact-pitch {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--offwhite);
+      margin-top: 24px;
+      margin-bottom: 52px;
+    }
+
+    .contact-info-list {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .contact-info-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 14px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contact-info-item:hover {
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+    .info-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(61,31,255,0.3), rgba(108,31,255,0.3));
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .info-text { display: flex; flex-direction: column; gap: 2px; }
+    .info-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .info-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    /* Contact form */
+    .contact-form {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-form::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--indigo), var(--violet), var(--aqua));
+    }
+
+    .form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      appearance: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: rgba(108,31,255,0.6);
+      box-shadow: 0 0 0 4px rgba(108,31,255,0.1);
+    }
+    .form-select option { background: var(--bg2); }
+    .form-textarea { resize: vertical; min-height: 110px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-submit {
+      margin-top: 8px;
+      width: 100%;
+      padding: 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--indigo), var(--violet));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 30px rgba(108,31,255,0.45);
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+    .form-submit:hover {
+      box-shadow: 0 8px 50px rgba(108,31,255,0.75);
+      transform: translateY(-2px);
+    }
+    .form-submit:active { transform: scale(0.99); }
+
+    /* ══ FOOTER ═══════════════════════════ */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border2);
+      padding: 48px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .footer-brand span { color: var(--aqua); }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex; gap: 28px;
+    }
+    .footer-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ══ KEYFRAMES ════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ══ RESPONSIVE ═══════════════════════ */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-cta { display: none; }
+      #home { padding: 100px 24px 100px; }
+      .section-inner { padding: 80px 24px; }
+      .service-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+      .stats-strip { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════ -->
+  <nav>
+    <a class="nav-brand" href="#home">
+      <div class="nav-logo-mark">💧</div>
+      <div class="nav-brand-name">Hydro<span>Force</span></div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link active" href="#home">Home</a>
+      <a class="nav-link" href="#services">Services</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </div>
+    <a class="nav-cta" href="#contact">Get a Free Quote</a>
+  </nav>
+
+  <!-- ══ PAGE 1 — HOME ════════════════════ -->
+  <section id="home">
+    <div class="hero-glow"></div>
+    <div class="hero-slash"></div>
+    <div class="hero-slash-2"></div>
+    <div class="hero-slash-3"></div>
+
+    <div class="hero-content">
+      <div class="hero-tag">Professional Pressure Washing</div>
+
+      <h1 class="hero-title">
+        <span class="t1">Blast Away</span>
+        <span class="t2">The Grime.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Driveways. Windows. Roofs. We restore your property to its best with high-powered precision cleaning — done right, every time.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">Our Services &nbsp;→</a>
+        <a href="#contact" class="btn-outline">Free Quote</a>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Jobs Completed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Core Services</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Satisfaction Rate</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5★</span>
+        <span class="stat-label">Average Review</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PAGE 2 — SERVICES ════════════════ -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-header">
+        <div>
+          <div class="section-kicker">What we do</div>
+          <h2 class="section-title">Our<br>Services</h2>
+        </div>
+        <p class="services-intro">
+          Every surface is different. We bring the right pressure, technique, and care to each job — leaving your property spotless and protected.
+        </p>
+      </div>
+
+      <div class="service-grid">
+
+        <!-- Driveway -->
+        <div class="service-card">
+          <div class="card-accent"></div>
+          <div class="card-visual cv-driveway">
+            <div class="tile-grid" id="tileGrid"></div>
+          </div>
+          <div class="card-body-wrap">
+            <div class="card-service-tag">Service 01</div>
+            <div class="card-service-name">Driveway<br>Washing</div>
+            <p class="card-service-desc">We strip oil stains, moss, and years of embedded dirt from concrete and tarmac — leaving it looking freshly laid.</p>
+            <ul class="card-feature-list">
+              <li>Concrete & block paving</li>
+              <li>Oil & rust stain removal</li>
+              <li>Moss & algae treatment</li>
+              <li>Re-seal option available</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Window -->
+        <div class="service-card">
+          <div class="card-accent"></div>
+          <div class="card-visual cv-window" id="windowVisual">
+            <div class="window-frame">
+              <div class="window-shine"></div>
+            </div>
+          </div>
+          <div class="card-body-wrap">
+            <div class="card-service-tag">Service 02</div>
+            <div class="card-service-name">Window<br>Cleaning</div>
+            <p class="card-service-desc">Streak-free results on every pane. We use purified water technology and low-pressure jets to clean frames, sills, and glass.</p>
+            <ul class="card-feature-list">
+              <li>Residential & commercial</li>
+              <li>Frames & sill cleaning</li>
+              <li>Streak-free guarantee</li>
+              <li>Conservatory roofs too</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Roof -->
+        <div class="service-card">
+          <div class="card-accent"></div>
+          <div class="card-visual cv-roof">
+            <div class="roof-shape">
+              <div class="roof-top"></div>
+              <div class="roof-body">
+                <div class="roof-shingles" id="roofShingles"></div>
+                <div class="jet"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-wrap">
+            <div class="card-service-tag">Service 03</div>
+            <div class="card-service-name">Roof<br>Cleaning</div>
+            <p class="card-service-desc">Lichen, moss, and black streaks don't stand a chance. Our soft-wash and pressure methods protect tiles while deep-cleaning.</p>
+            <ul class="card-feature-list">
+              <li>Moss & lichen removal</li>
+              <li>Tile-safe techniques</li>
+              <li>Biocide treatment</li>
+              <li>Gutters cleared too</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PAGE 3 — CONTACT ═════════════════ -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-layout">
+        <div class="contact-left">
+          <div class="section-kicker">Get in touch</div>
+          <h2 class="section-title">Get a<br>Free Quote</h2>
+          <p class="contact-pitch">
+            Tell us what needs cleaning and we'll get back to you with a no-obligation quote. Fast, friendly, and always fairly priced.
+          </p>
+
+          <div class="contact-info-list">
+            <div class="contact-info-item">
+              <div class="info-icon">📞</div>
+              <div class="info-text">
+                <span class="info-label">Call us</span>
+                <span class="info-value">0800 123 4567</span>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="info-icon">✉️</div>
+              <div class="info-text">
+                <span class="info-label">Email</span>
+                <span class="info-value">hello@hydroforce.co</span>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="info-icon">📍</div>
+              <div class="info-text">
+                <span class="info-label">Service Area</span>
+                <span class="info-value">Nationwide Coverage</span>
+              </div>
+            </div>
+            <div class="contact-info-item">
+              <div class="info-icon">🕐</div>
+              <div class="info-text">
+                <span class="info-label">Hours</span>
+                <span class="info-value">Mon–Sat, 7am – 7pm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <div class="form-title">Book a Clean</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" placeholder="John" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" placeholder="Smith" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="john@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" type="tel" placeholder="07700 000000" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Service Required</label>
+            <select class="form-select">
+              <option value="">Select a service…</option>
+              <option>Driveway Washing</option>
+              <option>Window Cleaning</option>
+              <option>Roof Cleaning</option>
+              <option>Multiple Services</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell us about your property and what needs cleaning…"></textarea>
+          </div>
+
+          <button class="form-submit">Send My Request →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ════════════════════════════ -->
+  <footer>
+    <div class="footer-brand">Hydro<span>Force</span></div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 HydroForce. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // ── Active nav link on scroll ─────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-link');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => obs.observe(s));
+
+    // ── Driveway tile grid ────────────────
+    const tileGrid = document.getElementById('tileGrid');
+    for (let i = 0; i < 24; i++) {
+      const t = document.createElement('div');
+      t.className = 'tile';
+      tileGrid.appendChild(t);
+    }
+    // Animate tiles cleaning left→right
+    const tiles = tileGrid.querySelectorAll('.tile');
+    let idx = 0;
+    function cleanTile() {
+      if (idx < tiles.length) {
+        tiles[idx].classList.add(idx % 5 === 0 ? 'very-clean' : 'clean');
+        idx++;
+        setTimeout(cleanTile, 180);
+      } else {
+        setTimeout(() => {
+          tiles.forEach(t => t.className = 'tile');
+          idx = 0;
+          setTimeout(cleanTile, 800);
+        }, 1200);
+      }
+    }
+    cleanTile();
+
+    // ── Window drip drops ─────────────────
+    const winVisual = document.getElementById('windowVisual');
+    for (let i = 0; i < 5; i++) {
+      const d = document.createElement('div');
+      d.className = 'water-drop';
+      d.style.cssText = `left:${20+i*18}%;height:${20+Math.random()*40}px;--dur:${1.5+Math.random()}s;--delay:${Math.random()*2}s`;
+      winVisual.appendChild(d);
+    }
+
+    // ── Roof shingles ─────────────────────
+    const shingles = document.getElementById('roofShingles');
+    for (let r = 0; r < 5; r++) {
+      const row = document.createElement('div');
+      row.className = 'shingle-row';
+      for (let c = 0; c < 8; c++) {
+        const s = document.createElement('div');
+        s.className = 'shingle' + (r < 2 ? ' clean' : '');
+        row.appendChild(s);
+      }
+      shingles.appendChild(row);
+    }
+  </script>
+</body>
+</html>
